@@ -8,12 +8,14 @@ FileKeeper is your easy-to-use solution for persisting your files when building 
 
 ```swift
 dependencies: [
+    .package(url: "https://github.com/apple/swift-argument-parser.git", branch: "main"),
     .package(url: "https://github.com/GabrielaBezerra/FileKeeper.git", branch: "main")
 ],
 targets: [
     .executableTarget(
         name: "yourprojectname",
         dependencies: [
+            .product(name: "ArgumentParser", package: "swift-argument-parser")
             .product(name: "FileKeeper", package: "filekeeper")
         ]
     )
