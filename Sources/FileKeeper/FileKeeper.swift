@@ -39,12 +39,12 @@ public struct FileKeeper {
     /// You should setup this property the first thing in your project. Variable that should be configured with the name of your project to create the default directory ~/.projectname/
     /// ## Example:
     /// ```swift
-    /// Persistence.projectName = "myproject"
+    /// FileKeeper.projectName = "myproject"
     /// // the final value will be "myproject"
     /// ```
     /// If your project name has more than one word separated by a space character, with both uppercase and lowercase letters, it will always be formatted like this:
     /// ```swift
-    /// Persistence.projectName = "My Project"
+    /// FileKeeper.projectName = "My Project"
     /// // the final value will be "my-project"
     /// ```
     public static var projectName: String {
@@ -67,9 +67,9 @@ public struct FileKeeper {
     /// - Returns: Object that was persisted.
     /// ## Example
     /// ```swift
-    /// Persistence.projectName = "myproject"
+    /// FileKeeper.projectName = "myproject"
     /// let content = Content()
-    /// try Persistence.saveJson(content, file: "folder/content.json")
+    /// try FileKeeper.saveJson(content, file: "folder/content.json")
     /// // saved in ~/.myproject/folder/content.json
     /// ```
     @discardableResult
@@ -86,8 +86,8 @@ public struct FileKeeper {
     /// - Returns: Object contained in the JSON file.
     /// ## Example
     /// ```swift
-    /// Persistence.projectName = "myproject"
-    /// let content = try Persistence.readJson(file: "folder/content.json")
+    /// FileKeeper.projectName = "myproject"
+    /// let content = try FileKeeper.readJson(file: "folder/content.json")
     /// // reads data from ~/.myproject/folder/content.json
     /// ```
     public static func readJson<T: Decodable>(file path: String) throws -> T {
@@ -105,16 +105,16 @@ public struct FileKeeper {
     ///   - separator: Character that defines a boundary between one data and another.
     /// ## Example 1
     /// ```swift
-    /// Persistence.projectName = "myproject"
+    /// FileKeeper.projectName = "myproject"
     /// let array: [String] = ["data1", "data2", "data3"]
-    /// try Persistence.savePlainText(content: array, path: "folder/content.txt")
+    /// try FileKeeper.savePlainText(content: array, path: "folder/content.txt")
     /// // saves data (one per line) in the file at ~/.myproject/folder/content.txt
     /// ```
     /// ## Example 2
     /// ```swift
-    /// Persistence.projectName = "myproject"
+    /// FileKeeper.projectName = "myproject"
     /// let array: [String] = ["data1", "data2", "data3"]
-    /// try Persistence.savePlainText(content: array, path: "folder/content.txt", separator: ",")
+    /// try FileKeeper.savePlainText(content: array, path: "folder/content.txt", separator: ",")
     /// // saves data (separated by commas) in the file at ~/.myproject/folder/content.txt
     /// ```
     public static func savePlainText(content: [String], path: String, separator: String = "\n") throws {
@@ -133,8 +133,8 @@ public struct FileKeeper {
     /// - Returns: An array of String with the data contained in the plain text file.
     /// ## Example
     /// ```swift
-    /// Persistence.projectName = "myproject"
-    /// let content: [String] = try Persistence.readPlainText(path: "folder/content.txt")
+    /// FileKeeper.projectName = "myproject"
+    /// let content: [String] = try FileKeeper.readPlainText(path: "folder/content.txt")
     /// // reads data from ~/.myproject/folder/content.txt
     /// ```
     public static func readPlainText(path: String, separator: String = "\n") throws -> [String] {
@@ -152,8 +152,8 @@ public struct FileKeeper {
     /// - Returns: List of names of the contents of that folder
     /// ## Example
     /// ```swift
-    /// Persistence.projectName = "myproject"
-    /// let content: [String] = try Persistence.listContents(in: "folder")
+    /// FileKeeper.projectName = "myproject"
+    /// let content: [String] = try FileKeeper.listContents(in: "folder")
     /// // reads files in ~/.myproject/folder and prints:
     /// // ~/.myproject/folder
     /// // contents.json
@@ -166,7 +166,7 @@ public struct FileKeeper {
     }
     
     private static func buildURL(appending path: String) throws -> URL {
-        assert(!_projectName.isEmpty, "Persistence.projectName is empty. Did you remember to setup it somewhere?")
+        assert(!_projectName.isEmpty, "FileKeeper.projectName is empty. Did you remember to setup it somewhere?")
         let home = FileManager.default.homeDirectoryForCurrentUser
         let projectFolder = home.appending(path: ".\(_projectName)")
         if !FileManager.default.fileExists(atPath: projectFolder.relativePath) {
