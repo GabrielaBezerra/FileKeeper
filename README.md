@@ -15,8 +15,8 @@ targets: [
     .executableTarget(
         name: "yourprojectname",
         dependencies: [
-            .product(name: "ArgumentParser", package: "swift-argument-parser")
-            .product(name: "FileKeeper", package: "filekeeper")
+            .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            .product(name: "FileKeeper", package: "FileKeeper")
         ]
     )
 ]
