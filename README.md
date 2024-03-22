@@ -11,3 +11,41 @@ dependencies: [
     .package(url: "https://github.com/GabrielaBezerra/FileKeeper.git", branch: "main")
 ]
 ```
+
+## Usage
+
+### Initial setup
+
+```swift
+FileKeeper.projectName = "YourProjectName"
+```
+
+### Save a JSON file
+
+```swift
+let encodableModel = Model()
+try FileKeeper.saveJson(encodableModel, at: "yourfolder/yourfilename.json")
+// saved in `~/.yourprojectname/yourfolder/yourfilename.json`
+```
+
+### Read a JSON file
+
+```swift
+let encodableModel = try FileKeeper.readJson(at: "yourfolder/yourfilename.json")
+// read from `~/.yourprojectname/yourfolder/yourfilename.json`
+```
+
+### Save a Plain Text file
+
+```swift
+let array = ["Adventures of Huckleberry Finn", "Alice's Adventures in Wonderland", "Moby-Dick"]
+try FileKeeper.savePlainText(content: array, at: "yourfolder/yourfilename.txt")
+// saved in `~/.yourprojectname/yourfolder/yourfilename.txt`
+```
+
+### Read a Plain Text file
+
+```swift
+try FileKeeper.readPlainText(at: "yourfolder/yourfilename.txt")
+// read from `~/.yourprojectname/yourfolder/yourfilename.txt`
+```
