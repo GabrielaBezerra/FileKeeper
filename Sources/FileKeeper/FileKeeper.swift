@@ -69,11 +69,11 @@ public struct FileKeeper {
     /// ```swift
     /// FileKeeper.projectName = "myproject"
     /// let content = Content()
-    /// try FileKeeper.saveJson(content, file: "folder/content.json")
+    /// try FileKeeper.saveJson(content, at: "folder/content.json")
     /// // saved in ~/.myproject/folder/content.json
     /// ```
     @discardableResult
-    public static func saveJson<T: Encodable>(_ model: T, file path: String) throws -> T {
+    public static func saveJson<T: Encodable>(_ model: T, at path: String) throws -> T {
         let url = try buildURL(appending: path)
         let data = try JSONEncoder().encode(model)
         try data.write(to: url)
@@ -87,10 +87,10 @@ public struct FileKeeper {
     /// ## Example
     /// ```swift
     /// FileKeeper.projectName = "myproject"
-    /// let content = try FileKeeper.readJson(file: "folder/content.json")
+    /// let content = try FileKeeper.readJson(at: "folder/content.json")
     /// // reads data from ~/.myproject/folder/content.json
     /// ```
-    public static func readJson<T: Decodable>(file path: String) throws -> T {
+    public static func readJson<T: Decodable>(at path: String) throws -> T {
         let url = try buildURL(appending: path)
         let data = try Data(contentsOf: url)
         let model = try JSONDecoder().decode(T.self, from: data)
@@ -107,17 +107,17 @@ public struct FileKeeper {
     /// ```swift
     /// FileKeeper.projectName = "myproject"
     /// let array: [String] = ["data1", "data2", "data3"]
-    /// try FileKeeper.savePlainText(content: array, path: "folder/content.txt")
+    /// try FileKeeper.savePlainText(content: array, at: "folder/content.txt")
     /// // saves data (one per line) in the file at ~/.myproject/folder/content.txt
     /// ```
     /// ## Example 2
     /// ```swift
     /// FileKeeper.projectName = "myproject"
     /// let array: [String] = ["data1", "data2", "data3"]
-    /// try FileKeeper.savePlainText(content: array, path: "folder/content.txt", separator: ",")
+    /// try FileKeeper.savePlainText(content: array, at: "folder/content.txt", separator: ",")
     /// // saves data (separated by commas) in the file at ~/.myproject/folder/content.txt
     /// ```
-    public static func savePlainText(content: [String], path: String, separator: String = "\n") throws {
+    public static func savePlainText(content: [String], at path: String, separator: String = "\n") throws {
         let url = try buildURL(appending: path)
         if let data = content
             .joined(separator: separator)
@@ -134,10 +134,10 @@ public struct FileKeeper {
     /// ## Example
     /// ```swift
     /// FileKeeper.projectName = "myproject"
-    /// let content: [String] = try FileKeeper.readPlainText(path: "folder/content.txt")
+    /// let content: [String] = try FileKeeper.readPlainText(at: "folder/content.txt")
     /// // reads data from ~/.myproject/folder/content.txt
     /// ```
-    public static func readPlainText(path: String, separator: String = "\n") throws -> [String] {
+    public static func readPlainText(at path: String, separator: String = "\n") throws -> [String] {
         let url = try buildURL(appending: path)
         let data = try Data(contentsOf: url)
         let string = String(bytes: data, encoding: .utf8)
